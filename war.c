@@ -15,17 +15,30 @@
 // ============================================================================
 
 // Inclusão das bibliotecas padrão necessárias para entrada/saída, alocação de memória, manipulação de strings e tempo.
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <locale.h>
 
 // --- Constantes Globais ---
 // Definem valores fixos para o número de territórios, missões e tamanho máximo de strings, facilitando a manutenção.
 
+
 // --- Estrutura de Dados ---
 // Define a estrutura para um território, contendo seu nome, a cor do exército que o domina e o número de tropas.
+struct dataTerritory
+{
+    char name[30];
+    char color[10];
+    int troops;
+};
 
 // --- Protótipos das Funções ---
 // Declarações antecipadas de todas as funções que serão usadas no programa, organizadas por categoria.
 // Funções de setup e gerenciamento de memória:
+
 // Funções de interface com o usuário:
+
 // Funções de lógica principal do jogo:
 // Função utilitária:
 
@@ -33,7 +46,8 @@
 // Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
 int main() {
     // 1. Configuração Inicial (Setup):
-    // - Define o locale para português.
+    setlocale(LC_ALL, "Portuguese"); // - Define o locale para português.
+    territoryRegister();
     // - Inicializa a semente para geração de números aleatórios com base no tempo atual.
     // - Aloca a memória para o mapa do mundo e verifica se a alocação foi bem-sucedida.
     // - Preenche os territórios com seus dados iniciais (tropas, donos, etc.).
@@ -60,9 +74,38 @@ int main() {
 // Aloca dinamicamente a memória para o vetor de territórios usando calloc.
 // Retorna um ponteiro para a memória alocada ou NULL em caso de falha.
 
-// inicializarTerritorios():
-// Preenche os dados iniciais de cada território no mapa (nome, cor do exército, número de tropas).
-// Esta função modifica o mapa passado por referência (ponteiro).
+// Registro de território
+void territoryRegister(){
+    // Preenche os dados iniciais de cada território no mapa (nome, cor do exército, número de tropas).
+    // Esta função modifica o mapa passado por referência (ponteiro).
+    struct dataTerritory territory[5]; 
+    int i; 
+    const int AMOUNT = 5;
+
+    printf("\n");
+
+    printf("--- Vamos Cadastrar 5 territórios iniciais nesse mundo. --- \n");
+    for (i = 0; i < AMOUNT; i++){
+        // para cada valor, o usuário digitará o nome, cor, e tropas do território e conforme elas forem digitadas, elas serão adicionadas na variável struct definida "territory" na posição do índice (no vetor) e seu respectivo tipo (nome, cor, tropas).
+        printf("---- CADASTRO DO TERRITÓRIO %d ---- \n", i);
+        printf("Nome do Território: "); scanf("%s", territory[i].name);
+        printf("Cor (Azul, Verde): "); scanf("%s", territory[i].color);
+        printf("Tropas: "); scanf("%d", &territory[i].troops);
+        printf("\n");
+    }
+
+    // Exibição Final de cada território cadastrado
+    printf("--- Territórios Cadastrados --- \n");
+    for (i = 0; i < AMOUNT; i++){
+        printf("Território %d: %s \n", i, territory[i].name);
+        printf("Cor: %s \n", territory[i].color);
+        printf("Tropas: %d \n", territory[i].troops);
+        printf("----------");
+        printf("\n");
+    }
+
+}
+
 
 // liberarMemoria():
 // Libera a memória previamente alocada para o mapa usando free.
